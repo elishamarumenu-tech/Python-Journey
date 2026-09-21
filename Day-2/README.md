@@ -19,7 +19,7 @@ The game works by:
 
 * **Python**
 * `random` module
-* `while` loop
+* `while` loop         
 * `try-except`
 * `if-elif-else`
 * `input()`
