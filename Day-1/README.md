@@ -77,4 +77,4 @@ Possible improvements include:
 * Supporting different types of dice such as 4-sided, 8-sided, or 20-sided dice.
 * Adding a score system.
 * Creating a graphical user in
-                                    
+                                
