@@ -10,4 +10,5 @@ print(f"System Chose {random_head_or_tails}")
 if user_guess == random_head_or_tails:
     print("Correct! You Guessed it right!")
 else:
-    print("Wrong! try agian!")
+    print("Wrong! try agian!")           
+                  
