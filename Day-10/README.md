@@ -311,4 +311,5 @@ This project uses Python's `eval()` function to evaluate arithmetic expressions.
 
 ### 🐍 Python Journey
 
-This project is part of my **Python Journey**, where I am learning Python through practical projects and building real-world programming skills.
+This project is part of my **Python Journey**, where I am learning Python through practical projects and building real-world programming skills.         
+                                                                      
