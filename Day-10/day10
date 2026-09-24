@@ -1,0 +1,155 @@
+import tkinter as tk
+import math
+
+class Calculator:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Python Calculator")
+        self.root.geometry("360x520")
+        self.root.resizable(False, False)
+        self.root.configure(bg="#1E1E1E")
+
+        self.expression = ""
+
+        # Display Frame
+        display_frame = tk.Frame(self.root, bg="#1E1E1E")
+        display_frame.pack(expand=True, fill="both")
+
+        # Expression Display Screen
+        self.display = tk.Entry(
+            display_frame,
+            font=("Arial", 28, "bold"),
+            bg="#2D2D2D",
+            fg="#FFFFFF",
+            bd=0,
+            justify="right",
+            insertbackground="white"
+        )
+        self.display.pack(expand=True, fill="both", padx=12, pady=(15, 15))
+
+        # Button Layout Grid Configuration
+        buttons = [
+            ('C', 1, 0, '#D4D4D2', '#000000'), ('√', 1, 1, '#D4D4D2', '#000000'), ('%', 1, 2, '#D4D4D2', '#000000'), ('/', 1, 3, '#FF9F0A', '#FFFFFF'),
+            ('7', 2, 0, '#505050', '#FFFFFF'), ('8', 2, 1, '#505050', '#FFFFFF'), ('9', 2, 2, '#505050', '#FFFFFF'), ('*', 2, 3, '#FF9F0A', '#FFFFFF'),
+            ('4', 3, 0, '#505050', '#FFFFFF'), ('5', 3, 1, '#505050', '#FFFFFF'), ('6', 3, 2, '#505050', '#FFFFFF'), ('-', 3, 3, '#FF9F0A', '#FFFFFF'),
+            ('1', 4, 0, '#505050', '#FFFFFF'), ('2', 4, 1, '#505050', '#FFFFFF'), ('3', 4, 2, '#505050', '#FFFFFF'), ('+', 4, 3, '#FF9F0A', '#FFFFFF'),
+            ('0', 5, 0, '#505050', '#FFFFFF'), ('.', 5, 1, '#505050', '#FFFFFF'), ('x²', 5, 2, '#505050', '#FFFFFF'), ('=', 5, 3, '#FF9F0A', '#FFFFFF'),
+        ]
+
+        # Buttons Frame
+        buttons_frame = tk.Frame(self.root, bg="#1E1E1E")
+        buttons_frame.pack(expand=True, fill="both")
+
+        for i in range(6):
+            buttons_frame.rowconfigure(i, weight=1)
+        for i in range(4):
+            buttons_frame.columnconfigure(i, weight=1)
+
+        # Create Buttons Dynamically
+        for text, row, col, bg_color, fg_color in buttons:
+            btn = tk.Button(
+                buttons_frame,
+                text=text,
+                font=("Arial", 18, "bold"),
+                bg=bg_color,
+                fg=fg_color,
+                bd=0,
+                activebackground="#737373",
+                activeforeground="#FFFFFF",
+                command=lambda t=text: self.on_button_click(t)
+            )
+            btn.grid(row=row, column=col, sticky="nsew", padx=2, pady=2)
+
+        # Keyboard Bindings
+        self.root.bind("<Return>", lambda e: self.calculate())
+        self.root.bind("<BackSpace>", lambda e: self.clear_last())
+        self.root.bind("<Escape>", lambda e: self.clear_all())
+        self.root.bind("<Key>", self.on_key_press)
+
+    def update_display(self, text):
+        self.display.delete(0, tk.END)
+        self.display.insert(0, text)
+
+    def on_button_click(self, char):
+        if char == 'C':
+            self.clear_all()
+        elif char == '=':
+            self.calculate()
+        elif char == '√':
+            self.square_root()
+        elif char == 'x²':
+            self.square()
+        elif char == '%':
+            self.percentage()
+        else:
+            self.expression += str(char)
+            self.update_display(self.expression)
+
+    def on_key_press(self, event):
+        if event.char in "0123456789.+-*/":
+            self.expression += event.char
+            self.update_display(self.expression)
+
+    def clear_all(self):
+        self.expression = ""
+        self.update_display("")
+
+    def clear_last(self):
+        self.expression = self.expression[:-1]
+        self.update_display(self.expression)
+
+    def square_root(self):
+        try:
+            val = float(self.display.get())
+            if val < 0:
+                self.update_display("Error (Negative √)")
+                self.expression = ""
+            else:
+                res = math.sqrt(val)
+                self.expression = str(res if res % 1 != 0 else int(res))
+                self.update_display(self.expression)
+        except ValueError:
+            self.update_display("Error")
+            self.expression = ""
+
+    def square(self):
+        try:
+            val = float(self.display.get())
+            res = val ** 2
+            self.expression = str(res if res % 1 != 0 else int(res))
+            self.update_display(self.expression)
+        except ValueError:
+            self.update_display("Error")
+            self.expression = ""
+
+    def percentage(self):
+        try:
+            val = float(self.display.get())
+            res = val / 100
+            self.expression = str(res)
+            self.update_display(self.expression)
+        except ValueError:
+            self.update_display("Error")
+            self.expression = ""
+
+    def calculate(self):
+        try:
+            if not self.expression:
+                return
+            result = eval(self.expression)
+            # Display whole numbers without trailing .0
+            formatted_result = str(result if result % 1 != 0 else int(result))
+            self.update_display(formatted_result)
+            self.expression = formatted_result
+        except ZeroDivisionError:
+            self.update_display("Error (Div by 0)")
+            self.expression = ""
+        except Exception:
+            self.update_display("Error")
+            self.expression = ""
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = Calculator(root)
+    root.mainloop()
