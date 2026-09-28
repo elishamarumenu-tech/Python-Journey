@@ -239,7 +239,7 @@ Possible improvements:
 The terminal-clearing feature helps keep bids private during normal use, but it should not be considered a secure method for protecting sensitive information.
 
 ## 👨‍💻 Author
-
+                                                                     
 **JOY ELISHA**
 
 ### 🐍 Python Journey
