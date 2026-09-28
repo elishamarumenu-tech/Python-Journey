@@ -288,7 +288,7 @@ Through this project, I practiced:
 * Designing a desktop application.
 
 ## 🚀 Future Improvements
-
+                                       
 Possible improvements:
 
 * Add scientific calculator functions.
