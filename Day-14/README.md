@@ -20,7 +20,7 @@ Users can store a contact's **name, phone number, and email address**, search co
 * Automatically load saved contacts when the application starts.
 * Input validation for required fields.
 * Delete confirmation dialog.
-* Success and warning message boxes.
+* Success and warning message boxes.           
 * Table-based contact display using Tkinter Treeview.
 * Clean dark-themed GUI.
 
